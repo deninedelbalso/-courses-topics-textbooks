@@ -1,0 +1,36 @@
+package courses;
+
+import java.util.Optional;
+
+import javax.annotation.Resource;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@DataJpaTest
+public class JPAMappingsTest {
+	
+	@Resource
+	private TestEntityManager entityManager;
+	
+	@Resource
+	private TopicRepository topicRepo;
+	
+	@Test
+	public void shouldSaveAndLoadTopic() {
+		Topic topic = topicRepo.save(new Topic("topic"));
+		long topicID=topic.getId();
+		
+		entityManager.flush();//force JPA to hit the database when we try and find it
+		entityManager.clear();
+		
+		Optional<Topic>result = topicRepo.findById(topicId);
+		result.get();
+		assertThat(topic.getName(), is("topic"));
+	};\
+
+}

@@ -1,0 +1,7 @@
+package courses;
+
+
+
+public interface TopicRepository extends CrudRepository(T, ID) {
+
+}

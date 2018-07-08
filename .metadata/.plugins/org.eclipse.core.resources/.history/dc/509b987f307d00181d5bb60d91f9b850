@@ -1,0 +1,74 @@
+package courses;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.junit.Assert.assertThat;
+
+import java.util.Optional;
+
+import javax.annotation.Resource;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@DataJpaTest
+public class JPAMappingsTest {
+	
+	@Resource
+	private TestEntityManager entityManager;
+	
+	@Resource
+	private TopicRepository topicRepo;
+	
+	@Resource
+	private CourseRepository courseRepo;
+	
+	@Test
+	public void shouldSaveAndLoadTopic() {
+		Topic topic = topicRepo.save(new Topic("topic"));
+		long topicId=topic.getId();
+		
+		entityManager.flush();//force JPA to hit the database when we try and find it
+		entityManager.clear();
+		
+		Optional<Topic>result = topicRepo.findById(topicId);
+		result.get();
+		assertThat(topic.getName(), is("topic"));
+	}
+
+
+
+@Test
+public void shouldGenerateTopicId() {
+	Topic topic = topicRepo.save(new Topic("topic"));
+	long topicId=topic.getId();
+	
+	entityManager.flush();//force JPA to hit the database when we try and find it
+	entityManager.clear();
+	assertThat(topicId, is(greaterThan(0L)));
+
+	}
+
+
+@Test
+public void shouldSaveAndLoadCourse() {
+	Course course = new Course("course name", "description");
+	course =courseRepo.save(course);
+	long courseId=course.getId();
+
+	
+	entityManager.flush();//force JPA to hit the database when we try and find it
+	entityManager.clear();
+	
+	Optional<Course>result = courseRepo.findById(courseId);
+	result.get();
+	assertThat(course.getName(), is("course name"));
+
+	}
+}
+
+}

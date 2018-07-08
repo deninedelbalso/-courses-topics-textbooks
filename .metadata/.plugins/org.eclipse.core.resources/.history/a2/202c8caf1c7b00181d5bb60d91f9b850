@@ -1,0 +1,12 @@
+package hello;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework..autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public classCustomersJpaApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(CustomersJpaApplication.class, args);
+	}
+}

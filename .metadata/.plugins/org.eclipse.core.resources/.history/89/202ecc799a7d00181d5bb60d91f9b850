@@ -1,0 +1,27 @@
+package courses;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
+public class Textbook {
+	
+	@Id
+	@GeneratedValue
+	private long id;
+	
+	
+	private String title;
+	
+	@ManyToOne
+	private Course course;
+	
+
+	public Textbook(String title, Course course) {
+		this.title = title;
+		this.course = course;
+	}
+
+
+}

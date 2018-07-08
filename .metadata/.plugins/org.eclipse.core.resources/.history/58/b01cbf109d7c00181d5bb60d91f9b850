@@ -1,0 +1,28 @@
+package courses;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
+public class Topic {
+
+	@Id
+	@GeneratedValue
+	private long id;
+	private String name;
+
+	public Topic(String name) {
+		this.name = name;
+	}
+
+	public Object getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+}
